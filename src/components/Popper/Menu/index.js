@@ -12,7 +12,7 @@ const defaultFn = () =>{
 
 }
 
-function Menu({ children, items = [], hideOnClick = false, onChange = defaultFn }) {
+function Menu({ children, items = [], hideOnClick = false, onChange = defaultFn}) {
 
     const [history, setHistory] = useState([{data: items}]);
     const current = history[history.length - 1];
@@ -43,7 +43,7 @@ function Menu({ children, items = [], hideOnClick = false, onChange = defaultFn 
                     {history.length > 1 && <Header title="Language" onBack={() => {
                         setHistory(prev => prev.slice(0, prev.length - 1))
                     }} />}
-                        {renderItem()}
+                        <div className={cx('menu-body')}>{renderItem()}</div>
                     </PopperWrapper>
                 </div>
             )}

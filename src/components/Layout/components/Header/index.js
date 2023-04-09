@@ -1,20 +1,19 @@
-
-import { useEffect, useState } from 'react'
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircleXmark, faSpinner, faMagnifyingGlass, faEllipsisVertical, faEarthAsia, faCircleQuestion, faKeyboard, faCloudArrowUp, faMessage, faUser, faCoins, faGear, faSignOut } from '@fortawesome/free-solid-svg-icons'
-import { Wrapper as PopperWrapper } from '~/components/Popper'
+import { faEllipsisVertical, faEarthAsia, faCircleQuestion, faKeyboard, faCloudArrowUp, faUser, faCoins, faGear, faSignOut } from '@fortawesome/free-solid-svg-icons'
 import classNames from 'classnames/bind'
 
 import styles from './Header.module.scss'
 import images from '~/assets/images'
 import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css';
-import HeadlessTippy from '@tippyjs/react/headless'
-import AccountItem from '~/components/AccountItem'
 import Button from '~/components/Button'
 import Menu from '~/components/Popper/Menu'
 import Image from '~/components/Images'
+import { CloudArrowUp, InboxIcon, Plus } from '~/components/icons'
+import Search from '../Search'
+import { Link } from 'react-router-dom'
+import routes from '~/config/routes';
+
 
 const cx = classNames.bind(styles)
 const MENU_ITEMS = [
@@ -47,13 +46,7 @@ const MENU_ITEMS = [
 ];
 
 function Header() {
-    const [searchResult, setSearchResult] = useState([]);
     const currentUser = true;
-    useEffect(() => {
-        setTimeout(() => {
-            setSearchResult([1, 2, 3])
-        }, 0)
-    }, [])
     //HanleLogic
     const handleMenuChange = (menuitem) => {};
     
@@ -85,42 +78,33 @@ function Header() {
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
-                <img src={images.logo} alt="Tiktok" />
-                <HeadlessTippy
-                    interactive
-                    // 
-                    disabled
-                    // 
-                    visible={searchResult.length > 0}
-                    render={(attrs) => (
-                        <div className={cx('search-result')} tabIndex="-1" {...attrs}>
-                            <PopperWrapper>
-                                <h4 className={cx('search-title')}>Account</h4>
-                                <AccountItem />
-                                <AccountItem />
-                                <AccountItem />
-                            </PopperWrapper>
-                        </div>
-                    )}>
-                    <div className={cx('search')}>
-                        <input placeholder="Search account and videos" spellCheck={false} />
-                        <button className={cx('clear')}>
-                            <FontAwesomeIcon icon={faCircleXmark} />
-                        </button>
-                        <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />
-
-                        <button className={cx('search-btn')}>
-                            <FontAwesomeIcon icon={faMagnifyingGlass} />
-                        </button>
-                    </div>
-                </HeadlessTippy>
+                <Link to={routes.home} className={cx('logo-link')}>
+                    <img src={images.logo} alt="Tiktok" />
+                </Link>
+                <Search />
                 <div className={cx('actions')}>
                     {currentUser ? (
-                        <Tippy delay={[0, 200]} content="Upload video">
+                        <div className={cx('actions-listItem')}>
                             <button className={cx('action-btn')}>
-                            <FontAwesomeIcon icon={faCloudArrowUp} />
+                                <Button solid  className={cx('action-btn-upload')}>
+                                <Plus />
+                                <span>Tải lên</span>
+                                </Button>
+                            </button>
+                        <Tippy delay={[0, 100]} content="Tin nhắn">
+                            <button className={cx('action-btn')}>
+                            <CloudArrowUp />
                             </button>
                         </Tippy>
+                        <Tippy delay={[0, 100]} content="Hộp thư">
+                            <div className={cx('action-inbox')}>
+                            <button className={cx('action-btn')}>
+                            <InboxIcon />
+                            </button>
+                            <span className={cx('Notification')}>12</span>
+                            </div>
+                        </Tippy>
+                        </div>
                     ) : (
                         <>
                             <Button text >Upload</Button>

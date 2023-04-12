@@ -10,7 +10,7 @@ import HeadlessTippy from '@tippyjs/react/headless'
 import AccountItem from '~/components/AccountItem'
 import { useDebounce } from '~/Hooks'
 import axios from 'axios'
-import * as request  from '~/utils/request'
+import * as httpRequest  from '~/utils/httpRequest'
 
 const cx = classNames.bind(styles)
 
@@ -34,7 +34,7 @@ function Search() {
         const fetchApi = async () => {
             try {
                 // fetch('https://623ede5fdf20a75d53cc47e4.mockapi.io/products')
-                const res = await request.get(`users/search`, {
+                const res = await httpRequest.get(`users/search`, {
                     params: {
                         q: debounce,
                         type: 'less'
